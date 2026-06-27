@@ -1,3 +1,5 @@
+using SmartInventory.Models;
+
 namespace SmartInventory
 {
     public partial class MainForm : Form
@@ -12,6 +14,18 @@ namespace SmartInventory
         public MainForm()
         {
             InitializeComponent();
+
+            Product p = new Product();
+            p.Id = 1;
+            p.Name = "45w 充電器";
+            // M=>decimal
+            p.Price = 599.5M;
+            p.Quantity = 20;
+
+            Console.WriteLine(p);
+
+
+
 
             // TODO（13-1）：啟動就讀資料庫
             //   DbHelper.InitDb();
