@@ -28,7 +28,10 @@ namespace SmartInventory
             //設定ComboBox
             cmbCategory.Items.Add("全部");
             cmbCategory.Items.AddRange(ProductService.Categories);
+            cmbCategory.SelectedIndex = 0;
 
+            cmbInputCategory.Items.AddRange(ProductService.Categories);
+            cmbInputCategory.SelectedIndex = 0;
 
 
             DBHelper.InitDb();
@@ -60,10 +63,10 @@ namespace SmartInventory
 
         public void RefreshView()
         {
-            //篩選機制
+            //篩選機制 filtered=清單result
             var filtered = ProductService.Search(all, txtSearch.Text.Trim(), cmbCategory.Text);
             view.Clear();
-            foreach (var p in filtered)
+            foreach (var p in filtered) //p in filtered(清單result)
             {
                 view.Add(p);
             }
@@ -71,7 +74,7 @@ namespace SmartInventory
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            if (!ReadInput(out Product p)) return;
+            if (!ReadInput(out Product p)) return; //先檢查輸入，如果不正確 → 直接停止（return）
 
             //插入資料庫
             DBHelper.InsertProduct(p);
@@ -80,23 +83,25 @@ namespace SmartInventory
 
             //更新資料庫
             RefreshView();
+            //輸入區變空白
             ClearInput();
         }
 
         private void ClearInput()
         {
-            TextBox[] boxs = { txtName, txtCategory, txtQuantity, txtPrice };
+            TextBox[] boxs = { txtName, txtQuantity, txtPrice };
+            //cmbInputCategory.SelectedIndex=0;
             foreach (var b in boxs) b.Text = string.Empty;
 
         }
 
 
 
-        private bool ReadInput(out Product product) //成功後 return前 回傳物件
+        private bool ReadInput(out Product product) //回傳true和false 並由輸入端組裝product也就是p
         {
             product = new Product();//需宣告product，因為prodcut是物件需new它
 
-            if (txtName.Text.Trim() == "" || txtCategory.Text.Trim() == "")
+            if (txtName.Text.Trim() == "" || cmbInputCategory.Text == "")
             {
                 MessageBox.Show("商品名稱或分類不能為空!");
                 return false;
@@ -114,7 +119,7 @@ namespace SmartInventory
             }
 
             product.Name = txtName.Text;
-            product.Category = txtCategory.Text;
+            product.Category = cmbInputCategory.Text;
             product.Quantity = q;
             product.Price = p;
 
@@ -131,7 +136,7 @@ namespace SmartInventory
             if (e.RowIndex < 0 || e.RowIndex >= view.Count) return;
             var p = view[e.RowIndex];
             txtName.Text = p.Name;
-            txtCategory.Text = p.Category;
+            cmbInputCategory.Text = p.Category;
             txtQuantity.Text = p.Quantity.ToString();
             txtPrice.Text = p.Price.ToString();
 
@@ -187,11 +192,14 @@ namespace SmartInventory
 
         }
 
+        //當 cmbCategory 「有任何變化」就觸發RefreshView()更新畫面;不用按按鈕，下拉選單選項改變就觸發
+
         private void cmbCategory_SelectedIndexChanged(object sender, EventArgs e)
         {
             RefreshView();
         }
 
+        //當 txtSearch 裡面的文字「有任何變化」就觸發RefreshView()更新畫面;不用按按鈕，系統「邊打字邊幫你搜尋」
         private void txtSearch_TextChanged(object sender, EventArgs e)
         {
             RefreshView();

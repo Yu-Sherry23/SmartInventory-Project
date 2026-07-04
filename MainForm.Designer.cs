@@ -35,7 +35,6 @@ partial class MainForm
             label5 = new Label();
             txtQuantity = new TextBox();
             label4 = new Label();
-            txtCategory = new TextBox();
             label3 = new Label();
             txtName = new TextBox();
             flowLayoutPanel2 = new FlowLayoutPanel();
@@ -46,6 +45,7 @@ partial class MainForm
             dgv = new DataGridView();
             flowLayoutPanel3 = new FlowLayoutPanel();
             lblTotal = new Label();
+            cmbInputCategory = new ComboBox();
             flowLayoutPanel1.SuspendLayout();
             tableLayoutPanel2.SuspendLayout();
             flowLayoutPanel2.SuspendLayout();
@@ -130,12 +130,12 @@ partial class MainForm
             tableLayoutPanel2.ColumnCount = 2;
             tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle());
             tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tableLayoutPanel2.Controls.Add(cmbInputCategory, 1, 1);
             tableLayoutPanel2.Controls.Add(label6, 0, 3);
             tableLayoutPanel2.Controls.Add(txtPrice, 1, 3);
             tableLayoutPanel2.Controls.Add(label5, 0, 2);
             tableLayoutPanel2.Controls.Add(txtQuantity, 1, 2);
             tableLayoutPanel2.Controls.Add(label4, 0, 1);
-            tableLayoutPanel2.Controls.Add(txtCategory, 1, 1);
             tableLayoutPanel2.Controls.Add(label3, 0, 0);
             tableLayoutPanel2.Controls.Add(txtName, 1, 0);
             tableLayoutPanel2.Controls.Add(flowLayoutPanel2, 1, 4);
@@ -203,15 +203,6 @@ partial class MainForm
             label4.Size = new Size(39, 19);
             label4.TabIndex = 2;
             label4.Text = "分類";
-            // 
-            // txtCategory
-            // 
-            txtCategory.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-            txtCategory.Location = new Point(51, 39);
-            txtCategory.Margin = new Padding(4);
-            txtCategory.Name = "txtCategory";
-            txtCategory.Size = new Size(202, 27);
-            txtCategory.TabIndex = 3;
             // 
             // label3
             // 
@@ -333,6 +324,17 @@ partial class MainForm
             lblTotal.TabIndex = 0;
             lblTotal.Text = "總庫存價值：$ 0";
             // 
+            // cmbInputCategory
+            // 
+            cmbInputCategory.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            cmbInputCategory.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbInputCategory.FormattingEnabled = true;
+            cmbInputCategory.Location = new Point(51, 39);
+            cmbInputCategory.Margin = new Padding(4);
+            cmbInputCategory.Name = "cmbInputCategory";
+            cmbInputCategory.Size = new Size(202, 27);
+            cmbInputCategory.TabIndex = 9;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(9F, 19F);
@@ -373,7 +375,6 @@ partial class MainForm
     private Label label3;
     private TextBox txtPrice;
     private TextBox txtQuantity;
-    private TextBox txtCategory;
     private TextBox txtName;
     private FlowLayoutPanel flowLayoutPanel2;
     private Button btnAdd;
@@ -383,5 +384,6 @@ partial class MainForm
     private FlowLayoutPanel flowLayoutPanel3;
     private Label lblTotal;
         private Button btnClear;
+        private ComboBox cmbInputCategory;
     }
 }

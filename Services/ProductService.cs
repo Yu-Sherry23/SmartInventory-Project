@@ -13,10 +13,10 @@ namespace SmartInventory.Services
             { "電子", "生活", "文具", "食品" };
         public static List<Product> Search(List<Product> all, string keyword, string category)
         {
-            //1. 判斷是否都為空字串
+            //1. 判斷是否都為空字串 (「如果沒有輸入關鍵字 + 選全部分類，就直接回傳全部資料」)
             if (keyword == string.Empty && category == string.Empty) return all;
 
-            //2. 是否是搜尋關鍵字
+            //2. 是否是搜尋關鍵字(資料沒有含關鍵字，不符合skip（continue)往下一筆，每一筆都沒關鍵字就不往下Category篩選，關鍵字搜尋結果為空(空就是result這個List裡面沒被Add任何東西，List空filtered空就無任何資料view顯示)/符合才往下篩選Category)
             //3. 是否是搜尋分類
             var result = new List<Product>(); //建立一個「空的清單」，用來裝篩選後的結果
             foreach (var p in all)
@@ -24,7 +24,7 @@ namespace SmartInventory.Services
                 if (!p.Name.Contains(keyword)) continue;
                 if (category == "全部" || p.Category.Contains(category))
                 {
-                    result.Add(p);
+                    result.Add(p); //不管商品分類是什麼，全部或任何分類，全部都會進 result
                 }
             }
 
