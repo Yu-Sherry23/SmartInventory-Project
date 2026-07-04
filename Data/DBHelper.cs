@@ -95,16 +95,16 @@ namespace SmartInventory.Data
         }
 
         //刪除
-        public static void DeleteItem(Product p)
+        public static void DeleteProduct(Product p)
         {
             using (var conn = new SqliteConnection(connStr))
             {
                 conn.Open();
-                string sql = "delete from item where id=@id";
+                string sql = "delete from Products where id=@id";
 
                 using (var cmd = new SqliteCommand(sql, conn))
                 {
-                    //cmd.Parameters.AddWithValue("@id", item.Id);
+                    cmd.Parameters.AddWithValue("@id", p.Id);
                     cmd.ExecuteNonQuery();
                 }
             }

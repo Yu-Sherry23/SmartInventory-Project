@@ -63,23 +63,82 @@ namespace SmartInventory
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            ReadInput();
+            if (!ReadInput(out Product p)) return;
+
+            //插入資料庫
+            DBHelper.InsertProduct(p);
+            all = DBHelper.GetAllProducts();
+            //all=DBHelper.GetAllProducts(); 也可以這樣寫all.Add(p);
+
+            //更新資料庫
+            RefreshView();
+            ClearInput();
         }
 
-        private bool ReadInput()
+        private void ClearInput()
         {
+            TextBox[] boxs = { txtName, txtCategory, txtQuantity, txtPrice };
+            foreach (var b in boxs) b.Text = string.Empty;
+
+        }
+
+
+
+        private bool ReadInput(out Product product) //成功後 return前 回傳物件
+        {
+            product = new Product();//需宣告product，因為prodcut是物件需new它
+
             if (txtName.Text.Trim() == "" || txtCategory.Text.Trim() == "")
             {
                 MessageBox.Show("商品名稱或分類不能為空!");
                 return false;
             }
 
-            if (!int.TryParse(txtQuantity.Text, out int q) || q<=0)
+            if (!int.TryParse(txtQuantity.Text, out int q) || q <= 0)
             {
                 MessageBox.Show("數量輸入不正確!");
                 return false;
             }
+            if (!decimal.TryParse(txtPrice.Text, out decimal p) || p <= 0)
+            {
+                MessageBox.Show("金額輸入不正確!");
+                return false;
+            }
+
+            product.Name = txtName.Text;
+            product.Category = txtCategory.Text;
+            product.Quantity = q;
+            product.Price = p;
+
             return true;
+        }
+
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            ClearInput();
+        }
+
+        private void dgv_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0 || e.RowIndex >= view.Count) return;
+            var p = view[e.RowIndex];
+            txtName.Text = p.Name;
+            txtCategory.Text = p.Category;
+            txtQuantity.Text = p.Quantity.ToString();
+            txtPrice.Text = p.Price.ToString();
+            
+        }
+        
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            //CellClick有綁定事件所以可以用e寫
+            if (dgv.CurrentRow == null) return;
+            var p = view[dgv.CurrentRow.Index];
+
+            DBHelper.DeleteProduct(p);
+            all=DBHelper.GetAllProducts();
+            RefreshView();
         }
 
 
