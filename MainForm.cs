@@ -1,5 +1,6 @@
 using SmartInventory.Data;
 using SmartInventory.Models;
+using SmartInventory.Services;
 using System.ComponentModel;
 using System.Diagnostics;
 
@@ -23,6 +24,11 @@ namespace SmartInventory
             dgv.AllowUserToAddRows = false;
             dgv.AllowUserToDeleteRows = false;
             dgv.MultiSelect = false;
+
+            //設定ComboBox
+            cmbCategory.Items.Add("全部");
+            cmbCategory.Items.AddRange(ProductService.Categories);
+
 
 
             DBHelper.InitDb();
@@ -54,8 +60,10 @@ namespace SmartInventory
 
         public void RefreshView()
         {
+            //篩選機制
+            var filtered = ProductService.Search(all, txtSearch.Text.Trim(), cmbCategory.Text);
             view.Clear();
-            foreach (var p in all)
+            foreach (var p in filtered)
             {
                 view.Add(p);
             }
@@ -177,6 +185,16 @@ namespace SmartInventory
             //維持當下位置
             dgv.Rows[index].Selected = true;
 
+        }
+
+        private void cmbCategory_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            RefreshView();
+        }
+
+        private void txtSearch_TextChanged(object sender, EventArgs e)
+        {
+            RefreshView();
         }
 
 
