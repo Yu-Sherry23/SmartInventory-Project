@@ -126,19 +126,57 @@ namespace SmartInventory
             txtCategory.Text = p.Category;
             txtQuantity.Text = p.Quantity.ToString();
             txtPrice.Text = p.Price.ToString();
-            
+
         }
-        
+
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            //CellClick有綁定事件所以可以用e寫
+            //CellClick有綁定事件所以可以用e寫，這裡沒有綁定事件所以不能用e寫
             if (dgv.CurrentRow == null) return;
-            var p = view[dgv.CurrentRow.Index];
+
+            int index = dgv.CurrentRow.Index;
+            var p = view[index]; //從Binding畫面清單(view)拿出 DataGridView 目前選到index那一列的整個物件 Product
+
+            if (MessageBox.Show($"是否刪除Id:{p.Id}-{p.Name}", "確認",
+                MessageBoxButtons.YesNo) != DialogResult.Yes) return;
+
 
             DBHelper.DeleteProduct(p);
-            all=DBHelper.GetAllProducts();
+            all = DBHelper.GetAllProducts();
             RefreshView();
+
+            //如果你原本選的位置已經不存在了就改選「最後一筆」
+            if (view.Count > 0)
+            {
+                if (index >= view.Count) index = view.Count - 1;
+            }
+
+            //維持當下位置
+            dgv.Rows[index].Selected = true;
+
+
+        }
+
+        private void btnUpdate_Click(object sender, EventArgs e)
+        {
+            if (dgv.CurrentRow == null) return;
+
+            if (!ReadInput(out Product p)) return;
+
+            int index = dgv.CurrentRow.Index;
+            //取得對應商品的實際Id
+            p.Id = view[index].Id;
+
+            if (MessageBox.Show($"是否更新Id:{p.Id}-{p.Name}", "確認",
+                MessageBoxButtons.YesNo) != DialogResult.Yes) return;
+            //更新商品
+            DBHelper.UpdateProduct(p);
+            all = DBHelper.GetAllProducts();
+            RefreshView();
+            //維持當下位置
+            dgv.Rows[index].Selected = true;
+
         }
 
 

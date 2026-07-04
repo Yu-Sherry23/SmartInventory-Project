@@ -110,29 +110,28 @@ namespace SmartInventory.Data
             }
         }
 
-        public static void UpdateItem(Product p)
+        public static void UpdateProduct(Product p)
         {
             using (var conn = new SqliteConnection(connStr))
             {
                 conn.Open();
+
                 string sql = """
-                    update item set
-                    date=@date,
-                    note=@note,
-                    amount=@amount,
-                    category=@category,
-                    isincome=@isincome
-                    where id=@id
+                    update Products set
+                    Name=@Name,
+                    Category=@Category,
+                    Quantity=@Quantity,
+                    Price=@Price
+                    where Id=@Id
                     """;
 
                 using (var cmd = new SqliteCommand(sql, conn))
                 {
-                    //cmd.Parameters.AddWithValue("@date", item.Date.ToString("yyyy-MM-dd HH:mm:ss"));
-                    //cmd.Parameters.AddWithValue("@note", item.Note);
-                    //cmd.Parameters.AddWithValue("@amount", (double)item.Amount);
-                    //cmd.Parameters.AddWithValue("@category", item.CategoryType.ToString());
-                    //cmd.Parameters.AddWithValue("@isincome", item.IsIncome);
-                    //cmd.Parameters.AddWithValue("@id", item.Id);
+                    cmd.Parameters.AddWithValue("@Name", p.Name);
+                    cmd.Parameters.AddWithValue("@Category", p.Category);
+                    cmd.Parameters.AddWithValue("@Quantity", p.Quantity);
+                    cmd.Parameters.AddWithValue("@Price", (double)p.Price);
+                    cmd.Parameters.AddWithValue("@Id", p.Id);
                     cmd.ExecuteNonQuery();
                 }
             }
@@ -140,7 +139,7 @@ namespace SmartInventory.Data
 
 
 
-        public static void DeleteAllItem()
+        public static void DeleteAllProducts()
         {
             using (var conn = new SqliteConnection(connStr))
             {
