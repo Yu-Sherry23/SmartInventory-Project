@@ -18,6 +18,7 @@
        <PackageReference Include="WinForms.DataVisualization" Version="1.10.2" /> -->
   <ItemGroup>
     <PackageReference Include="Microsoft.Data.Sqlite" Version="10.0.9" />
+    <PackageReference Include="MySql.Data" Version="9.7.0" />
     <PackageReference Include="WinForms.DataVisualization" Version="1.10.2" />
   </ItemGroup>
 
