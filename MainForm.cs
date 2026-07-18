@@ -235,18 +235,21 @@ namespace SmartInventory
 
         }
 
+        
+        //可註解調
         private void btnChart_Click(object sender, EventArgs e)
         {
-            var stat=ProductService.Statistics(all);
+            //var stat=ProductService.Statistics(all);
 
-            var sb = new StringBuilder(); 
-            foreach(var (k,v) in stat)  //可以用+=但這比較舊式寫法
-            {
-              sb.AppendLine($"{k} 數量:{v[0]} 金額:{v[1]}");
-            }
+            //var sb = new StringBuilder(); 
+            //foreach(var (k,v) in stat)  //可以用+=但這比較舊式寫法
+            //{
+            //  sb.AppendLine($"{k} 數量:{v[0]} 金額:{v[1]}");
+            //}以上測試用
 
-            var chartForm = new ChartForm(); //物件 繼承於Form會有基本控鍵等
-            chartForm.ShowDialog();
+            var chartForm = new ChartForm(all); //物件 繼承於Form會有基本控鍵等
+            chartForm.Show(); //chartForm.ShowDialog(); 圖表按叉才能修改數據
+
 
             //MessageBox.Show(sb.ToString(), "分類資訊");
 
