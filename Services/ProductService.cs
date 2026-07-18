@@ -13,6 +13,32 @@ namespace SmartInventory.Services
             { "電子", "生活", "文具", "食品" };
 
 
+        public static Dictionary<string, decimal[]> Statistics(List<Product> all)
+        {
+            // 字典 <TKey,TValue> 
+            var stat = new Dictionary<string, decimal[]>();//2個以上用陣列寫法，var stat = new Dictionary<string, decimal>();
+            foreach(var p in all)
+            {
+                //檢查key是否存在(不存在需要初始化)/如果沒有這個分類，就先建立一個空帳本
+                if (!stat.ContainsKey(p.Category))
+                {
+                    stat[p.Category] = new decimal[2];
+                }
+
+                // 把這筆商品數量加進去
+                stat[p.Category][0] += p.Quantity;
+                // 把這筆商品金額加進去
+                stat[p.Category][1] += p.TotalValue;
+            }
+
+            return stat;
+        
+        }
+
+
+
+
+
         public static (decimal,int) GetTotalValue(List<Product> all)
         {
             //decimal qty,total = 0; 本來可以寫在一起，但是qty是int要另外寫

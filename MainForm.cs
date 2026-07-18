@@ -217,7 +217,7 @@ namespace SmartInventory
         private void btnCheck_Click(object sender, EventArgs e)
         {
             int lowStock = (int)nudStockNum.Value; //強制犧牲一下，decimal轉int
-            var result=ProductService.GetLowStock(all, lowStock);
+            var result = ProductService.GetLowStock(all, lowStock);
             if (result.Count == 0)
             {
                 MessageBox.Show("庫存狀況良好!");
@@ -225,12 +225,19 @@ namespace SmartInventory
             }
 
             string lowStockStr = $"低庫存警告:少於{lowStock}數量\n\n";
-            foreach(var p in result)
+            foreach (var p in result)
             {
                 lowStockStr += $"{p.Name} 數量:{p.Quantity}\n";
             }
             MessageBox.Show(lowStockStr);
 
+        }
+
+        private void btnChart_Click(object sender, EventArgs e)
+        {
+            var stat=ProductService.Statistics(all);
+            Debug.WriteLine(stat["電子"][0]); //0是數量
+            Debug.WriteLine(stat["電子"][1]); //1是金額
         }
 
 
