@@ -25,7 +25,7 @@ namespace SmartInventory
             dgv.AllowUserToDeleteRows = false;
             dgv.MultiSelect = false;
 
-            //和屬性比，系統會先以這裡為準
+            //和屬性比，系統會先以這裡(建構式裡的)為準
             nudStockNum.Minimum = 0;
             nudStockNum.Maximum = 10000;
 
