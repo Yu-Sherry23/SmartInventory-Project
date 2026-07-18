@@ -29,7 +29,9 @@ partial class MainForm
             label2 = new Label();
             cmbCategory = new ComboBox();
             btnCheck = new Button();
+            nudStockNum = new NumericUpDown();
             tableLayoutPanel2 = new TableLayoutPanel();
+            cmbInputCategory = new ComboBox();
             label6 = new Label();
             txtPrice = new TextBox();
             label5 = new Label();
@@ -45,8 +47,8 @@ partial class MainForm
             dgv = new DataGridView();
             flowLayoutPanel3 = new FlowLayoutPanel();
             lblTotal = new Label();
-            cmbInputCategory = new ComboBox();
             flowLayoutPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)nudStockNum).BeginInit();
             tableLayoutPanel2.SuspendLayout();
             flowLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgv).BeginInit();
@@ -62,6 +64,7 @@ partial class MainForm
             flowLayoutPanel1.Controls.Add(label2);
             flowLayoutPanel1.Controls.Add(cmbCategory);
             flowLayoutPanel1.Controls.Add(btnCheck);
+            flowLayoutPanel1.Controls.Add(nudStockNum);
             flowLayoutPanel1.Dock = DockStyle.Top;
             flowLayoutPanel1.Location = new Point(0, 0);
             flowLayoutPanel1.Margin = new Padding(4);
@@ -124,6 +127,17 @@ partial class MainForm
             btnCheck.TabIndex = 4;
             btnCheck.Text = "庫存警示";
             btnCheck.UseVisualStyleBackColor = true;
+            btnCheck.Click += btnCheck_Click;
+            // 
+            // nudStockNum
+            // 
+            nudStockNum.Location = new Point(644, 9);
+            nudStockNum.Maximum = new decimal(new int[] { 10000000, 0, 0, 0 });
+            nudStockNum.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            nudStockNum.Name = "nudStockNum";
+            nudStockNum.Size = new Size(143, 27);
+            nudStockNum.TabIndex = 5;
+            nudStockNum.Value = new decimal(new int[] { 10, 0, 0, 0 });
             // 
             // tableLayoutPanel2
             // 
@@ -152,6 +166,17 @@ partial class MainForm
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Absolute, 25F));
             tableLayoutPanel2.Size = new Size(257, 712);
             tableLayoutPanel2.TabIndex = 1;
+            // 
+            // cmbInputCategory
+            // 
+            cmbInputCategory.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            cmbInputCategory.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbInputCategory.FormattingEnabled = true;
+            cmbInputCategory.Location = new Point(51, 39);
+            cmbInputCategory.Margin = new Padding(4);
+            cmbInputCategory.Name = "cmbInputCategory";
+            cmbInputCategory.Size = new Size(202, 27);
+            cmbInputCategory.TabIndex = 9;
             // 
             // label6
             // 
@@ -324,17 +349,6 @@ partial class MainForm
             lblTotal.TabIndex = 0;
             lblTotal.Text = "總庫存價值：$ 0";
             // 
-            // cmbInputCategory
-            // 
-            cmbInputCategory.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            cmbInputCategory.DropDownStyle = ComboBoxStyle.DropDownList;
-            cmbInputCategory.FormattingEnabled = true;
-            cmbInputCategory.Location = new Point(51, 39);
-            cmbInputCategory.Margin = new Padding(4);
-            cmbInputCategory.Name = "cmbInputCategory";
-            cmbInputCategory.Size = new Size(202, 27);
-            cmbInputCategory.TabIndex = 9;
-            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(9F, 19F);
@@ -350,6 +364,7 @@ partial class MainForm
             Text = "SmartInventory 智能庫存管理系統";
             flowLayoutPanel1.ResumeLayout(false);
             flowLayoutPanel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)nudStockNum).EndInit();
             tableLayoutPanel2.ResumeLayout(false);
             tableLayoutPanel2.PerformLayout();
             flowLayoutPanel2.ResumeLayout(false);
@@ -385,5 +400,6 @@ partial class MainForm
     private Label lblTotal;
         private Button btnClear;
         private ComboBox cmbInputCategory;
+        private NumericUpDown nudStockNum;
     }
 }
